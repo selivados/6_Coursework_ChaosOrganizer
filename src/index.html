@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" href="favicon.ico" type="image/png">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <title>Chaos Organizer</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="chat">
+        <div class="chat-window">
+          <ul class="messages-list"></ul>
+          <div class="drop-zone hidden">
+            <div class="drop-zone_text">Перетащите сюда файлы</div>
+          </div>
+        </div>
+        <form class="chat-form">
+          <div class="form-control">
+            <button class="button file-button" type="button"></button>
+            <button class="button geo-button" type="button"></button>
+            <button class="button audio-button" type="button"></button>
+            <button class="button rec-audio-button hidden" type="button"></button>
+            <button class="button stop-audio-button hidden" type="button" disabled></button>
+            <button class="button video-button" type="button"></button>
+            <button class="button rec-video-button hidden" type="button"></button>
+            <button class="button stop-video-button hidden" type="button" disabled></button>
+            <input class="form-input" type="text" name="message" placeholder="Type your message here...">
+            <input class="file-input" type="file" multiple>
+            <button class="button send-button" type="submit"></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
