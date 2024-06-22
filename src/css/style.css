@@ -208,3 +208,12 @@ p, ul {
   background-position: center;
   background-size: contain;
 }
+
+.indicator {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  margin: auto 0;
+  border-radius: 50%;
+  background-color: gold;
+}

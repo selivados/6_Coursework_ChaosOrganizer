@@ -26,64 +26,65 @@ const videoButton = chatForm.querySelector(".video-button");
 const recVideoButton = chatForm.querySelector(".rec-video-button");
 const stopVideoButton = chatForm.querySelector(".stop-video-button");
 const sendButton = chatForm.querySelector(".send-button");
+const indicator = chatForm.querySelector(".indicator");
 
 const render = new Render(messagesList, userId);
 
 const sendMessageHandler = () => {
   const text = formInput.value.trim();
 
-  if (text) {
-    if (text.startsWith("@schedule:")) {
-      const itemsArray = text.split(/\s+/);
+  if (!text) return;
 
-      if (itemsArray.length > 3) {
-        const today = moment();
-        const alertTime = moment(
-          `${itemsArray[1]} ${itemsArray[2]}`,
-          [
-            "HH:mm DD.MM.YYYY",
-            "HH:mm D.MM.YYYY",
-            "H:mm DD.MM.YYYY",
-            "H:mm D.MM.YYYY",
-            "DD.MM.YYYY HH:mm",
-            "DD.MM.YYYY H:mm",
-            "D.MM.YYYY HH:mm",
-            "D.MM.YYYY H:mm",
-          ],
-          true,
-        );
-        const textContent = itemsArray.slice(3).join(" ");
+  if (text.startsWith("@schedule:")) {
+    const itemsArray = text.split(/\s+/);
 
-        if (alertTime.isValid && alertTime.isAfter(today) && textContent) {
-          const newMessage = {
-            from: userId,
-            alertTime,
-            textContent,
-          };
+    if (itemsArray.length < 4) return;
 
-          ws.send(JSON.stringify({ reminder: newMessage }));
-        }
-      }
-    } else {
-      const textArray = text.split(/\s+/).map((item) => {
-        if (item.startsWith("http://") || item.startsWith("https://")) {
-          return `<a href=${item} target="_blank" rel="noopener noreferrer">${item}</a>`;
-        }
+    const today = moment();
+    const alertTime = moment(
+      `${itemsArray[1]} ${itemsArray[2]}`,
+      [
+        "HH:mm DD.MM.YYYY",
+        "HH:mm D.MM.YYYY",
+        "H:mm DD.MM.YYYY",
+        "H:mm D.MM.YYYY",
+        "DD.MM.YYYY HH:mm",
+        "DD.MM.YYYY H:mm",
+        "D.MM.YYYY HH:mm",
+        "D.MM.YYYY H:mm",
+      ],
+      true,
+    );
+    const textContent = itemsArray.slice(3).join(" ");
 
-        return item;
-      });
-
+    if (alertTime.isValid && alertTime.isAfter(today) && textContent) {
       const newMessage = {
         from: userId,
-        type: "message/text",
-        textContent: textArray.join(" "),
+        alertTime,
+        textContent,
       };
 
-      ws.send(JSON.stringify({ message: newMessage }));
+      ws.send(JSON.stringify({ reminder: newMessage }));
     }
+  } else {
+    const textArray = text.split(/\s+/).map((item) => {
+      if (item.startsWith("http://") || item.startsWith("https://")) {
+        return `<a href=${item} target="_blank" rel="noopener noreferrer">${item}</a>`;
+      }
 
-    formInput.value = "";
+      return item;
+    });
+
+    const newMessage = {
+      from: userId,
+      type: "message/text",
+      textContent: textArray.join(" "),
+    };
+
+    ws.send(JSON.stringify({ message: newMessage }));
   }
+
+  formInput.value = "";
 };
 
 const sendFileHandler = (file) => {
@@ -181,6 +182,32 @@ dropZone.addEventListener("drop", (e) => {
   dropZone.classList.add("hidden");
 });
 
+const enableAllControls = () => {
+  fileButton.disabled = false;
+  geoButton.disabled = false;
+  audioButton.disabled = false;
+  recAudioButton.disabled = false;
+  stopAudioButton.disabled = false;
+  videoButton.disabled = false;
+  recVideoButton.disabled = false;
+  stopVideoButton.disabled = false;
+  formInput.disabled = false;
+  sendButton.disabled = false;
+};
+
+const disableAllControls = () => {
+  fileButton.disabled = true;
+  geoButton.disabled = true;
+  audioButton.disabled = true;
+  recAudioButton.disabled = true;
+  stopAudioButton.disabled = true;
+  videoButton.disabled = true;
+  recVideoButton.disabled = true;
+  stopVideoButton.disabled = true;
+  formInput.disabled = true;
+  sendButton.disabled = true;
+};
+
 audioButton.addEventListener("click", () => {
   recAudioButton.classList.toggle("hidden");
   stopAudioButton.classList.toggle("hidden");
@@ -198,14 +225,8 @@ recAudioButton.addEventListener("click", async () => {
   const chunks = [];
 
   recorder.addEventListener("start", () => {
-    fileButton.disabled = true;
-    geoButton.disabled = true;
-    audioButton.disabled = true;
-    recAudioButton.disabled = true;
+    disableAllControls();
     stopAudioButton.disabled = false;
-    videoButton.disabled = true;
-    formInput.disabled = true;
-    sendButton.disabled = true;
   });
 
   recorder.addEventListener("dataavailable", (e) => {
@@ -241,14 +262,9 @@ recAudioButton.addEventListener("click", async () => {
     recAudioButton.classList.add("hidden");
     stopAudioButton.classList.add("hidden");
 
-    fileButton.disabled = false;
-    geoButton.disabled = false;
-    audioButton.disabled = false;
-    recAudioButton.disabled = false;
+    enableAllControls();
     stopAudioButton.disabled = true;
-    videoButton.disabled = false;
-    formInput.disabled = false;
-    sendButton.disabled = false;
+    stopVideoButton.disabled = true;
   });
 });
 
@@ -270,14 +286,8 @@ recVideoButton.addEventListener("click", async () => {
   const chunks = [];
 
   recorder.addEventListener("start", () => {
-    fileButton.disabled = true;
-    geoButton.disabled = true;
-    audioButton.disabled = true;
-    videoButton.disabled = true;
-    recVideoButton.disabled = true;
+    disableAllControls();
     stopVideoButton.disabled = false;
-    formInput.disabled = true;
-    sendButton.disabled = true;
   });
 
   recorder.addEventListener("dataavailable", (e) => {
@@ -313,14 +323,9 @@ recVideoButton.addEventListener("click", async () => {
     recVideoButton.classList.add("hidden");
     stopVideoButton.classList.add("hidden");
 
-    fileButton.disabled = false;
-    geoButton.disabled = false;
-    audioButton.disabled = false;
-    videoButton.disabled = false;
-    recVideoButton.disabled = false;
+    enableAllControls();
+    stopAudioButton.disabled = true;
     stopVideoButton.disabled = true;
-    formInput.disabled = false;
-    sendButton.disabled = false;
   });
 });
 
@@ -337,6 +342,26 @@ const messagesScrollHandler = () => {
     );
   }
 };
+
+ws.addEventListener("close", () => {
+  disableAllControls();
+
+  indicator.style.backgroundColor = "red";
+});
+
+ws.addEventListener("error", () => {
+  disableAllControls();
+
+  indicator.style.backgroundColor = "red";
+});
+
+ws.addEventListener("open", () => {
+  enableAllControls();
+  stopAudioButton.disabled = true;
+  stopVideoButton.disabled = true;
+
+  indicator.style.backgroundColor = "green";
+});
 
 ws.addEventListener("message", (e) => {
   const data = JSON.parse(e.data);

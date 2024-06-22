@@ -20,17 +20,18 @@
         </div>
         <form class="chat-form">
           <div class="form-control">
-            <button class="button file-button" type="button"></button>
-            <button class="button geo-button" type="button"></button>
-            <button class="button audio-button" type="button"></button>
-            <button class="button rec-audio-button hidden" type="button"></button>
+            <button class="button file-button" type="button" disabled></button>
+            <button class="button geo-button" type="button" disabled></button>
+            <button class="button audio-button" type="button" disabled></button>
+            <button class="button rec-audio-button hidden" type="button" disabled></button>
             <button class="button stop-audio-button hidden" type="button" disabled></button>
-            <button class="button video-button" type="button"></button>
-            <button class="button rec-video-button hidden" type="button"></button>
+            <button class="button video-button" type="button" disabled></button>
+            <button class="button rec-video-button hidden" type="button" disabled></button>
             <button class="button stop-video-button hidden" type="button" disabled></button>
-            <input class="form-input" type="text" name="message" placeholder="Type your message here...">
+            <input class="form-input" type="text" name="message" placeholder="Type your message here..." disabled>
             <input class="file-input" type="file" multiple>
-            <button class="button send-button" type="submit"></button>
+            <button class="button send-button" type="submit" disabled></button>
+            <div class="indicator" title="Connection indicator"></div>
           </div>
         </form>
       </div>
