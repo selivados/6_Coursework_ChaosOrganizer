@@ -1,4 +1,4 @@
-export default function getUserId() {
+export const getUserId = () => {
   let userId = localStorage.getItem("userId");
 
   if (!userId) {
@@ -7,4 +7,4 @@ export default function getUserId() {
   }
 
   return userId;
-}
+};

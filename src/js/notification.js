@@ -1,4 +1,4 @@
-export default async function notification(message) {
+export async function notification(message) {
   if (!window.Notification) {
     return;
   }

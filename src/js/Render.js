@@ -1,7 +1,7 @@
 import L from "leaflet";
 import moment from "moment";
 
-export default class Render {
+export class Render {
   constructor(messagesListEl, userId) {
     this.messagesListEl = messagesListEl;
     this.userId = userId;
