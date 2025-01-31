@@ -1,7 +1,7 @@
-![CI](https://github.com/freelandos/6_Coursework_ChaosOrganizer/actions/workflows/web.yml/badge.svg)
+![CI](https://github.com/selivados/6_Coursework_ChaosOrganizer/actions/workflows/web.yml/badge.svg)
 
-[Deployed application](https://freelandos.github.io/6_Coursework_ChaosOrganizer/)\
-[Application backend](https://github.com/freelandos/6_Coursework_ChaosOrganizer_Backend)
+[Deployed application](https://selivados.github.io/6_Coursework_ChaosOrganizer/)\
+[Application backend](https://github.com/selivados/6_Coursework_ChaosOrganizer_Backend)
 
 ## Реализованные функции:
 
